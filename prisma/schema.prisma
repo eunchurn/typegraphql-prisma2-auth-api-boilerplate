@@ -1,0 +1,44 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "node_modules/typegraphql-prisma/generator.js"
+  output   = "../prisma/generated/type-graphql"
+}
+
+
+model Post {
+  id        Int     @default(autoincrement()) @id
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+model User {
+  id       Int     @default(autoincrement()) @id
+  email    String  @unique
+  password String  @default("")
+  name     String?
+  posts    Post[]
+}
+
+model Test {
+  id   Int    @default(autoincrement()) @id
+  test String @unique
+  img  Url[]
+}
+
+model Url {
+  id     Int    @default(autoincrement()) @id
+  url    String
+  test   Test?  @relation(fields: [testId], references: [id])
+  testId Int?
+}

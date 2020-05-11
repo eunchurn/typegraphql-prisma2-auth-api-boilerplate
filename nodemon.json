@@ -1,0 +1,9 @@
+{
+  "watch": [
+    "src/**/*.ts",
+    "src/**/*.graphql",
+    "prisma/schema.prisma"
+  ],
+  "ext": "ts json graphql",
+  "delay": "1000"
+}
